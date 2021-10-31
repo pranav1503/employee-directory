@@ -1,12 +1,14 @@
 <?php
   include 'util/header.php';
   require 'dynamoDBUtil.php';
+  require 's3Util.php';
 
   if(!array_key_exists('id', $_GET)){
     header("Location: index.php");
     exit;
   }
   $tableName = 'employee_directory';
+  $bucket = 'employee-directory-pr-0001';
   $id = $_GET['id'];
   $key = $marshaler->marshalJson('
     {
@@ -22,7 +24,6 @@
     $result = $dynamodb->getItem($params);
     $employee = $result["Item"];
     $employee = $marshaler->unmarshalItem($employee);
-    print_r($employee);
 ?>
   <div class="container" style="margin-top:50px;">
     <div class="row">
@@ -47,6 +48,20 @@
             <label for="emailID" class="form-label">Email address *</label>
             <input type="email" class="form-control" id="emailID" name="emailID" placeholder="Email Address" aria-describedby="emailHelp" disabled value="<?php echo $employee['email']; ?>">
           </div>
+          <?php
+              $is_photo = !empty($employee['photo']);
+              if($is_photo){
+                $cmd = $s3Client->getCommand('GetObject', [
+                  'Bucket' => $bucket,
+                  'Key' => $employee['photo']
+                ]);
+                $request = $s3Client->createPresignedRequest($cmd, '+20 minutes');
+
+                // Get the actual presigned-url
+                $presignedUrl = (string)$request->getUri();
+           ?>
+           <img src="<?php echo $presignedUrl ?>" alt="" style="height:100px;width: 100px;">
+         <?php } ?>
           <div class="mb-3">
             <label for="formFile" class="form-label">Upload Photo</label>
             <input class="form-control" type="file" id="formFile" name="file" accept=".jpg,.png">
