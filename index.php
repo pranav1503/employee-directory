@@ -34,7 +34,7 @@
                 foreach ($result['Items'] as $emp) {
                     $employee = $marshaler->unmarshalItem($emp);
            ?>
-          <tr>
+          <tr onclick="viewEmployee('<?php echo $employee['id']; ?>')">
             <td><?php echo ucwords($employee['name']); ?></td>
             <td><?php echo ucwords($employee['designation']); ?></td>
             <td><?php echo $employee['email']; ?></td>
@@ -56,6 +56,11 @@
       </table>
     </div>
   </div>
+<script type="text/javascript">
+  function viewEmployee(id) {
+    window.location.href = "employee.php?id="+id;
+  }
+</script>
 <?php
   }catch (DynamoDbException $e) {
       echo "Unable to query:\n";
