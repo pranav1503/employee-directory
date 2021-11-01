@@ -1,11 +1,12 @@
 <?php
   require 'util/header.php';
   require 'dynamoDBUtil.php';
-
+  include 'isTable.php';
   $tableName = 'employee_directory';
   $params = [
     'TableName' => $tableName,
   ];
+  if ($table_present && $isBucket) {
 ?>
   <div class="header container" style="margin-top:20px;">
     <div class="row">
@@ -66,5 +67,8 @@
       echo "Unable to query:\n";
       echo $e->getMessage() . "\n";
   }
+}else {
+    include 'tableBanner.php';
+}
   include 'util/footer.php';
 ?>

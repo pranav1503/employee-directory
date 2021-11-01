@@ -2,13 +2,14 @@
   include 'util/header.php';
   require 'dynamoDBUtil.php';
   require 's3Util.php';
-
+  $s3_config = include('s3_config.php');
   if(!array_key_exists('id', $_GET)){
     header("Location: index.php");
     exit;
   }
   $tableName = 'employee_directory';
-  $bucket = 'employee-directory-pr-0001';
+  $bucket = $s3_config['bucket'];
+  // echo $bucket;
   $id = $_GET['id'];
   $key = $marshaler->marshalJson('
     {
@@ -53,7 +54,7 @@
               if($is_photo){
                 $cmd = $s3Client->getCommand('GetObject', [
                   'Bucket' => $bucket,
-                  'Key' => $employee['photo']
+                  'Key' => 'resized/' . $employee['photo']
                 ]);
                 $request = $s3Client->createPresignedRequest($cmd, '+20 minutes');
 
@@ -67,7 +68,7 @@
             <input class="form-control" type="file" id="formFile" name="file" accept=".jpg,.png">
           </div>
           <button type="submit" class="btn btn-success">Update</button>
-          <a class="btn btn-danger" href="index.php">Delete</a>
+          <a class="btn btn-danger" href="delete/delete.php?id=<?php echo $id; ?>">Delete</a>
           <a class="btn btn-secondary" href="index.php">Cancel</a>
         </form>
       </div>

@@ -1,5 +1,9 @@
 <?php
   include 'util/header.php';
+  include 'isTable.php';
+  if(!$table_present){
+    echo "<script>window.location.href = 'index.php';</script>";
+  }
 ?>
   <div class="container" style="margin-top:50px;">
     <div class="row">

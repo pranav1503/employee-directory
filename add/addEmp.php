@@ -2,7 +2,7 @@
     require '../dynamoDBUtil.php';
     require '../s3Util.php';
     require '../util/util.php';
-
+    $s3_config = include('../s3_config.php');
     $name = $_POST['name'];
     $designation = $_POST['designation'];
     $emailID = $_POST['emailID'];
@@ -27,7 +27,7 @@
       // Move the file
       move_uploaded_file($tmp_name, $temp_file_path);
 
-      $bucket = 'employee-directory-pr-0001';
+      $bucket = $s3_config['bucket'];
       $key = "photos/{$temp_file_name}";
       try {
         $result = $s3Client->putObject([
@@ -40,7 +40,7 @@
       }
       // remove files
       unlink($temp_file_path);
-      $photo = $key;
+      $photo = $temp_file_name;
     }
 
 
