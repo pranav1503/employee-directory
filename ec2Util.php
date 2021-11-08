@@ -15,4 +15,6 @@
       echo "INSTANCE ID: " . @file_get_contents("http://instance-data/latest/meta-data/instance-id");
       echo "<br>";
       echo "AVAILABILITY ZONE: " . @file_get_contents("http://instance-data/latest/meta-data/placement/availability-zone");
+      echo "<br>";
+      echo "IP ADDRESS: " . @file_get_contents("http://instance-data/latest/meta-data/public-ipv4");
  ?>
