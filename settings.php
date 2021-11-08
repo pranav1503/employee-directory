@@ -36,12 +36,15 @@
       <div class="col-12">
         <h4>EC2 Instance Details: </h4>
         <br>
-        <?php try{ ?>
-        <h5>Instance ID&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <?php echo  @file_get_contents("http://instance-data/latest/meta-data/instance-id"); ?> </h5>
+        <?php try{
+          $url = "http://169.254.169.254/latest/meta-data/instance-id";
+          $ch = curl_init();
+          curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+          curl_setopt($ch, CURLOPT_URL, $url);
+          $res = curl_exec($ch);
+          ?>
+        <h5>Instance ID&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <?php echo  $res; ?> </h5>
         <br>
-        <h5>IP Address &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <?php echo  @file_get_contents("http://instance-data/latest/meta-data/public-ipv4"); ?> </h5>
-        <br>
-        <h5>Availabilty Zone : <?php echo  @file_get_contents("http://instance-data/latest/meta-data/placement/availability-zone"); ?> </h5>
       <?php } catch(Exception $e) { echo "<h5>EC2 instance details not available.</h5>"; }?>
       </div>
     </div>
