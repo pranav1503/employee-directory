@@ -31,17 +31,18 @@
           <button type="button" class="btn btn-warning" id="bucketValBtn">Change</button>
       </div>
     </div>
+    <br>
     <div class="row">
       <div class="col-12">
         <h4>EC2 Instance Details: </h4>
         <br>
         <?php try{ ?>
-        <h3>Instance ID&nbsp;: <?php echo  @file_get_contents("http://instance-data/latest/meta-data/instance-id"); ?> </h3>
+        <h5>Instance ID&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <?php echo  @file_get_contents("http://instance-data/latest/meta-data/instance-id"); ?> </h5>
         <br>
-        <h3>IP Address &nbsp;: <?php echo  @file_get_contents("http://instance-data/latest/meta-data/public-ipv4"); ?> </h3>
+        <h5>IP Address &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <?php echo  @file_get_contents("http://instance-data/latest/meta-data/public-ipv4"); ?> </h5>
         <br>
-        <h3>Availabilty Zone : <?php echo  @file_get_contents("http://instance-data/latest/meta-data/placement/availability-zone"); ?> </h3>
-      <?php } catch(Exception $e) { echo "<h3>EC2 instance details not available.</h3>"; }?>
+        <h5>Availabilty Zone : <?php echo  @file_get_contents("http://instance-data/latest/meta-data/placement/availability-zone"); ?> </h5>
+      <?php } catch(Exception $e) { echo "<h5>EC2 instance details not available.</h5>"; }?>
       </div>
     </div>
     </div>
