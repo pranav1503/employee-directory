@@ -31,6 +31,19 @@
           <button type="button" class="btn btn-warning" id="bucketValBtn">Change</button>
       </div>
     </div>
+    <div class="row">
+      <div class="col-12">
+        <h4>EC2 Instance Details: </h4>
+        <br>
+        <?php try{ ?>
+        <h3>Instance ID&nbsp;: <?php echo  @file_get_contents("http://instance-data/latest/meta-data/instance-id"); ?> </h3>
+        <br>
+        <h3>IP Address &nbsp;: <?php echo  @file_get_contents("http://instance-data/latest/meta-data/public-ipv4"); ?> </h3>
+        <br>
+        <h3>Availabilty Zone : <?php echo  @file_get_contents("http://instance-data/latest/meta-data/placement/availability-zone"); ?> </h3>
+      <?php } catch(Exception $e) { echo "<h3>EC2 instance details not available.</h3>"; }?>
+      </div>
+    </div>
     </div>
     <div class="col-md-3">
 
