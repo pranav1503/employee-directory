@@ -12,5 +12,7 @@
       //     'credentials' => $credentials
       // ]);
 
-      echo @file_get_contents("http://instance-data/latest/meta-data/instance-id");
+      echo "INSTANCE ID: " . @file_get_contents("http://instance-data/latest/meta-data/instance-id");
+      echo "<br>";
+      echo "AVAILABILITY ZONE: " . @file_get_contents("http://instance-data/latest/meta-data/placement/availability-zone");
  ?>
